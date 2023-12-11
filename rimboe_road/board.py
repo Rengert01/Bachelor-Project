@@ -38,6 +38,7 @@ class Board:
         self.moves = []
         self.real_game = True
         self.last_turn = False
+        self.heuristic_value = None
 
         if self.real_game:
             self.board_report = "Starting player: " + str(self.turn_to_play) + "\n"
@@ -54,6 +55,9 @@ class Board:
 
     def get_board_report(self):
         return self.board_report
+
+    def get_heuristic_value(self):
+        return self.heuristic_value
 
     def set_real_game(self, value):
         self.real_game = value
@@ -143,7 +147,7 @@ class Board:
             self.set_pos(old_pos)
 
     def turn_string(self):
-        self.board_report += "\n/--------------/\n"
+        self.board_report += "\n/---------------------/\n"
         self.board_report += str(self.get_turn_to_play()) + " played: \n"
         self.board_report += self.print_board()
 
@@ -153,6 +157,12 @@ class Board:
 
         a_move_amount = len(self.get_possible_moves(self.a_pos))
         h_move_amount = len(self.get_possible_moves(self.h_pos))
+
+        tot_move_amount = a_move_amount + h_move_amount
+        if tot_move_amount == 0:
+            self.board_report = 0
+        else:
+            self.heuristic_value = (a_move_amount - h_move_amount) / tot_move_amount
 
         flag = False
         if self.last_to_play != self.turn_to_play:
@@ -190,6 +200,7 @@ class Board:
     def __update_board_state(self):
         self.winner = None
         self.last_turn = False
+        self.heuristic = None
         self.state = self.evaluate_board_state()
 
     def __switch_players(self):

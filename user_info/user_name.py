@@ -13,6 +13,7 @@ class UserInput:
         x_position = int((screen_width - 500) / 2)
         y_position = int((screen_height - 500) / 2)
         self.root.geometry(f"500x500+{x_position}+{y_position}")
+        # self.root.attributes('-fullscreen', True)
 
         self.create_name_input()
         self.create_submit_button()

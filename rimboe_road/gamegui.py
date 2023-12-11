@@ -18,12 +18,14 @@ class GameGUI:
         self.opp_name = opp_name
         self.turn = turn
 
+        value = 125 * size
+
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
-        x_position = int((screen_width - 500) / 2)
-        y_position = int((screen_height - 500) / 2)
+        x_position = int((screen_width - value) / 2)
+        y_position = int((screen_height - value) / 2)
 
-        self.root.geometry(f"500x500+{x_position}+{y_position}")
+        self.root.geometry(f"{value}x{value}+{x_position}+{y_position}")
 
         for i in range(self.board_size + 2):
             self.root.grid_rowconfigure(i, weight=1)
@@ -58,13 +60,13 @@ class GameGUI:
 
         for i in range(self.board_size):
             for j in range(self.board_size):
-                button_text = self.get_button_colour(i, j)
+                button_colour = self.get_button_colour(i, j)
                 button = tk.Button(
                     self.root,
-                    fg=button_text,
-                    bg=button_text,
-                    activebackground=button_text,
-                    activeforeground=button_text,
+                    fg=button_colour,
+                    bg=button_colour,
+                    activebackground=button_colour,
+                    activeforeground=button_colour,
                     width=button_size,
                     height=button_size // 2,
                     command=lambda x=i, y=j: self.on_button_click(x, y)
@@ -125,7 +127,7 @@ class GameGUI:
         elif state is State.OVER:
             return 1 if board.get_winner() is maximizer_mark else -1
         elif depth == 0:
-            return 0
+            return board.get_heuristic_value()
 
         if is_max_turn:
             max_score = -math.inf
@@ -196,7 +198,7 @@ class GameGUI:
             messagebox.showinfo("Game Over", result)
 
         self.game_report += str(self.rimboe_board.get_board_report())
-        self.game_report += str(result) + "\n\n\n"
+        self.game_report += "Result: " + str(result) + "\n\n"
         self.root.destroy()
 
     def get_button_colour(self, i, j):

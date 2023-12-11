@@ -16,6 +16,7 @@ class EndOfPractise:
         x_position = int((screen_width - 700) / 2)
         y_position = int((screen_height - 500) / 2)
         self.root.geometry(f"700x500+{x_position}+{y_position}")
+        # self.root.attributes('-fullscreen', True)
 
     def create_widgets(self):
         self.create_consent_message()

@@ -6,6 +6,7 @@ from user_info.game_explanation import GameExplanation
 from user_info.end_of_practise import EndOfPractise
 import os.path
 import pathlib
+from datetime import datetime
 
 
 def start():
@@ -24,7 +25,7 @@ def start():
     user_name = user_input_form.get_user_name()
     user_name.replace(" ", "_")
 
-    full_report = ""
+    full_report = str(datetime.now()) + "\n"
     user_result = ""
     flag = False
     while not flag:
