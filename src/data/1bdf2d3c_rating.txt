@@ -1,0 +1,3 @@
+Max: 5 
+Hidde: 3 
+Gabriel: 8 
